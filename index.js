@@ -23,6 +23,7 @@ const getData = async () => {
 
       res.on("end", function () {
         const body = Buffer.concat(chunks);
+        console.log(i)
         fs.appendFile(
           "myFile.json",
           body.toString(),
