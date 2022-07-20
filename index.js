@@ -1,10 +1,9 @@
 const http = require("https");
 var fs = require("fs");
 
-var obj = [];
 const getData = async () => {
   console.log("Step 1");
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 166; i++) {
     const options = {
       method: "GET",
       hostname: "api.opensea.io",
@@ -24,35 +23,20 @@ const getData = async () => {
 
       res.on("end", function () {
         const body = Buffer.concat(chunks);
-        console.log(JSON.stringify(body));
-        obj = { ...obj, body };
-        console.log(obj);
+        fs.appendFile(
+          "myFile.json",
+          body.toString(),
+          function (err) {
+            if (err) throw err;
+            console.log("complete");
+          }
+        );
       });
     });
 
     req.end();
   }
 };
-
-const writeData = async () => {
-  console.log("step 3");
-  fs.writeFile(
-    "myjsonfile.txt",
-    JSON.stringify(obj, null, 2),
-    "utf-8",
-    function (err) {
-      if (err) throw err;
-      console.log("complete");
-    }
-  );
-};
-
-const mainFunction = async () => {
-  await getData();
-  console.log("Step 2");
-  await writeData();
-};
-
-mainFunction();
+getData()
 
 
