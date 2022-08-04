@@ -23,13 +23,13 @@ const getData = async () => {
 
       res.on("end", function () {
         const body = Buffer.concat(chunks);
-        console.log(i)
+        // console.log(i)
         fs.appendFile(
-          "myFile.json",
+          "dataset.json",
           body.toString(),
           function (err) {
             if (err) throw err;
-            console.log("complete");
+            // console.log("complete");
           }
         );
       });
